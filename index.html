@@ -97,24 +97,42 @@ function init(){
 
 // model
 
-                  var onProgress = function ( xhr ) {
-                  if ( xhr.lengthComputable ) {
-                  var percentComplete = xhr.loaded / xhr.total * 100;
-                  console.log( Math.round(percentComplete, 2) + '% downloaded' );
-                  }
-                  };
+                  // var onProgress = function ( xhr ) {
+                  // if ( xhr.lengthComputable ) {
+                  // var percentComplete = xhr.loaded / xhr.total * 100;
+                  // console.log( Math.round(percentComplete, 2) + '% downloaded' );
+                  // }
+                  // };
+									//
+                  // var onError = function ( xhr ) { };
+									//
+                  // THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+									//
+                  // var mtlLoader = new THREE.MTLLoader();
+                  // mtlLoader.setPath( 'sneakers/' );
+                  // mtlLoader.load( 'shoe.mtl', function( materials ) {
+									//
+                  // materials.preload();
+									//
+                  // var objLoader = new THREE.OBJLoader();
 
-                  var onError = function ( xhr ) { };
+/// new obj
 
-                  THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 
-                  var mtlLoader = new THREE.MTLLoader();
-                  mtlLoader.setPath( 'sneakers/' );
-                  mtlLoader.load( 'shoe.mtl', function( materials ) {
+									var loader = new THREE.OBJLoader()
+									loader.load( 'sneakers/shoe.obj', function ( object ) {
 
-                  materials.preload();
+									 object.traverse( function ( child ) {
+														 if ( child instanceof THREE.Mesh ) {
+																	child.material.ambient.setHex(0xFF0000);
+																	child.material.color.setHex(0x00FF00);
+																 }
+														 } );
 
-                  var objLoader = new THREE.OBJLoader();
+										object.position.y = 0;
+										scene.add( object );
+									} );
+
 
                   //var mattt = new THREE.MeshStandardMaterial({metalness: 0, roughness: 0.5});
 /// color test
