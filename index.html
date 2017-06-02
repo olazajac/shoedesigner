@@ -20,6 +20,26 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		<script src="js/three.min.js"></script>
     <script src="threejs/examples/js/controls/OrbitControls.js"></script>
     <script src="threejs/examples/js/controls/TrackballControls.js"></script>
@@ -44,15 +64,10 @@ function init(){
             //  camera.position.set(0, 0, 500);
             //  camera.lookAt(new THREE.Vector3(0, 0, 0)); // target kamery
 
-              // controls = new THREE.TrackballControls(camera);
-              // controls.minDistance = 50;
-        			// controls.maxDistance = 200;
-              // controls.addEventListener("change", render);
-
-
-							controls = new THREE.OrbitControls( camera );
-
-
+              controls = new THREE.TrackballControls(camera);
+              controls.minDistance = 50;
+        			controls.maxDistance = 200;
+              controls.addEventListener("change", render);
 
               scene = new THREE.Scene();  //   field of view /  aspectRatio  /   near and far clipping plane
 
@@ -166,13 +181,9 @@ function init(){
               // }
 
 
-          
-
-							function render() {
-							  requestAnimationFrame( render );
-							  controls.update();
-							  renderer.render( scene, camera );
-							}
+              function render() {
+                renderer.render(scene, camera);
+              }
 
 
 
