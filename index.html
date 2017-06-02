@@ -118,52 +118,25 @@ function init(){
 
                   //var mattt = new THREE.MeshStandardMaterial({metalness: 0, roughness: 0.5});
 // obj model
-                  // objLoader.setMaterials( materials );
-									//
-									//
-                  // objLoader.setPath( 'sneakers/' );
-									//
-                  // objLoader.load( 'shoe.obj', function ( xx ) {
-                  // var factor = 0.5;  // scale factor
-                  // xx.scale.set(factor, factor, factor);
-                  // xx.position.y = 0;
-									//
-									//
-									//
-									//
-                  // scene.add( xx );
-									//
-                  // }, onProgress, onError );
-                  // }); // mtlLoader
+                  objLoader.setMaterials( materials );
 
-                  // var faceMat = new THREE.MeshLambertMaterial({color:0xb5556b});
 
-// obj loader 2
+                  objLoader.setPath( 'sneakers/' );
 
-var loader = new THREE.OBJLoader( manager );
-				loader.load( 'sneakers/shoe.obj', function ( object ) {
-
-							object.traverse( function ( child ) {
-
-								if ( child instanceof THREE.Mesh ) {
-
-									//child.material.map = texture;
-									child.material.ambient.setHex(0xFF0000);
-									child.material.emissive.setHex(0x00FF00);
-									child.material.color.setHex(0x0000FF);
-								}
-
-							} );
-
-								object.position.x =500;
-								object.position.y =0;
-								object.position.z =500;
-								scene.add(object);
-
-				} );
+                  objLoader.load( 'shoe.obj', function ( xx ) {
+                  var factor = 0.5;  // scale factor
+                  xx.scale.set(factor, factor, factor);
+                  xx.position.y = 0;
 
 
 
+
+                  scene.add( xx );
+
+                  }, onProgress, onError );
+                  }); // mtlLoader
+
+                  var faceMat = new THREE.MeshLambertMaterial({color:0xb5556b});
 
 
 
