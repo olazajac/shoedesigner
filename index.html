@@ -13,9 +13,13 @@
       	background: -webkit-linear-gradient(#ffffff, #0dd4e6);
       	background: linear-gradient(#ffffff, #0dd4e6);
       }
+
 		</style>
 	</head>
 	<body>
+
+
+
 		<script src="js/three.min.js"></script>
     <script src="threejs/examples/js/controls/OrbitControls.js"></script>
     <script src="threejs/examples/js/controls/TrackballControls.js"></script>
@@ -40,10 +44,15 @@ function init(){
             //  camera.position.set(0, 0, 500);
             //  camera.lookAt(new THREE.Vector3(0, 0, 0)); // target kamery
 
-              controls = new THREE.TrackballControls(camera);
-              controls.minDistance = 50;
-        			controls.maxDistance = 200;
-              controls.addEventListener("change", render);
+              // controls = new THREE.TrackballControls(camera);
+              // controls.minDistance = 50;
+        			// controls.maxDistance = 200;
+              // controls.addEventListener("change", render);
+
+
+							controls = new THREE.OrbitControls( camera );
+
+
 
               scene = new THREE.Scene();  //   field of view /  aspectRatio  /   near and far clipping plane
 
@@ -157,9 +166,13 @@ function init(){
               // }
 
 
-              function render() {
-                renderer.render(scene, camera);
-              }
+          
+
+							function render() {
+							  requestAnimationFrame( render );
+							  controls.update();
+							  renderer.render( scene, camera );
+							}
 
 
 
