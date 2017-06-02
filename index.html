@@ -117,8 +117,15 @@ function init(){
                   var objLoader = new THREE.OBJLoader();
 
                   //var mattt = new THREE.MeshStandardMaterial({metalness: 0, roughness: 0.5});
+/// color test
+									var yellowmat = new THREE.MeshPhongMaterial({
+								  color: 0xd2be10,
 
-                  objLoader.setMaterials( materials );
+								});
+
+//
+
+                  objLoader.setMaterials( yellowmat );
 
 
                   objLoader.setPath( 'sneakers/' );
