@@ -1,234 +1,160 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<title>mDew</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-<script type="text/javascript">
-//<![CDATA[
-try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dok3v=1613a3a185/"},atok:"3f7ae71a9db28fbef8acc195dc5ca0d2",petok:"37fb26f1078099c71ebd5419e45be4026b2f3a08-1496402610-1800",zone:"metalop.com",rocket:"0",apps:{"prnc":{"dalytkn":null},"abetterbrowser":{"ie":"7","opera":"12","chrome":"30","safari":"7","firefox":"25"}}}];!function(a,b){a=document.createElement("script"),b=document.getElementsByTagName("script")[0],a.async=!0,a.src="//ajax.cloudflare.com/cdn-cgi/nexp/dok3v=85b614c0f6/cloudflare.min.js",b.parentNode.insertBefore(a,b)}()}}catch(e){};
-//]]>
-</script>
-</head>
-<body>
-<div id="container"></div>
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>three</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100%;
+      	position: absolute;
+      	width: 100%;
+      	height: 100%;
+      	overflow: hidden;
+      	background: -webkit-linear-gradient(#ffffff, #0dd4e6);
+      	background: linear-gradient(#ffffff, #0dd4e6);
+      }
 
+		</style>
+	</head>
+	<body>
 
-<script src="threejs/examples/js/Detector.js"></script>
-<script src="threejs/examples/js/libs/stats.min.js"></script>
-<script src="threejs/examples/js/libs/THREEx.KeyboardState.js"></script>
 
 
-<script src="js/three.min.js"></script>
-<script src="threejs/examples/js/controls/OrbitControls.js"></script>
-<script src="threejs/examples/js/controls/TrackballControls.js"></script>
-<script src="threejs/examples/js/loaders/OBJLoader.js"></script>
-<script src="threejs/examples/js/loaders/MTLLoader.js"></script>
-<script src="threejs/examples/js/loaders/DDSLoader.js"></script>
 
 
 
 
 
-<script>
 
 
-	if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
 
-			var container, stats;
-			var cross;
-			var camera, controls, scene, renderer,projector;
-			var objects = [];
-			var selectedBinId;
-			var clock = new THREE.Clock();
-			var keyboard = new THREEx.KeyboardState();
-			var cross;
-			var noReportMode =true;
-			var binDataGlobal=[];
-			var tempArray=new Array();
 
 
-			init();
-			animate();
 
-			function init() {
 
 
-				camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 5000 );
-				camera.position.set( 1000, 1000, 2000 );
 
 
-				//Orbit Controls
-				controls = new THREE.OrbitControls(camera);
 
 
 
 
-				// world
 
-				scene = new THREE.Scene();
+		<script src="js/three.min.js"></script>
+    <script src="threejs/examples/js/controls/OrbitControls.js"></script>
+    <script src="threejs/examples/js/controls/TrackballControls.js"></script>
+    <script src="threejs/examples/js/loaders/OBJLoader.js"></script>
+    <script src="threejs/examples/js/loaders/MTLLoader.js"></script>
+    <script src="threejs/examples/js/loaders/DDSLoader.js"></script>
+		<script>
 
 
-				scene.add( controls);
+              var controls, camera, scene, renderer, width, height;
 
+              width=window.innerWidth;
+              height=window.innerHeight;
 
+  init();
+  animate();
 
+function init(){
 
+  camera = new THREE.PerspectiveCamera( 45, width/height, 1, 1000 );  //camera.position.z = 5;
+              camera.position.z = 500;
+            //  camera.position.set(0, 0, 500);
+            //  camera.lookAt(new THREE.Vector3(0, 0, 0)); // target kamery
 
+              controls = new THREE.TrackballControls(camera);
+              controls.minDistance = 50;
+        			controls.maxDistance = 200;
+              controls.addEventListener("change", render);
 
-			var dirLight = new THREE.DirectionalLight ( 0xffffff );
-                dirLight.position.set( 20, 20, 100 ).normalize();
+              scene = new THREE.Scene();  //   field of view /  aspectRatio  /   near and far clipping plane
 
-				/*light = new THREE.AmbientLight( 0xffffff);
-				scene.add( light );
-*/
 
-				// renderer
 
-				renderer = new THREE.WebGLRenderer( { antialias: true } );
+// model
 
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.sortObjects = false;
-				renderer.setClearColor( 0xB9D3EE);
+                  var onProgress = function ( xhr ) {
+                  if ( xhr.lengthComputable ) {
+                  var percentComplete = xhr.loaded / xhr.total * 100;
+                  console.log( Math.round(percentComplete, 2) + '% downloaded' );
+                  }
+                  };
 
-				container = document.getElementById( 'container' );
-				container.appendChild( renderer.domElement );
+                  var onError = function ( xhr ) { };
 
-				// stats
+                  THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 
-				stats = new Stats();
-				stats.domElement.style.position = 'absolute';
-				stats.domElement.style.bottom = '0px';
-				stats.domElement.style.zIndex = 100;
-				container.appendChild( stats.domElement );
+                  var mtlLoader = new THREE.MTLLoader();
+                  mtlLoader.setPath( 'sneakers/' );
+                  mtlLoader.load( 'shoe.mtl', function( materials ) {
 
-				//
+                  materials.preload();
 
-				window.addEventListener( 'resize', onWindowResize, false );
+                  var objLoader = new THREE.OBJLoader();
 
-				// start animation
+                  //var mattt = new THREE.MeshStandardMaterial({metalness: 0, roughness: 0.5});
 
-			//
-					//projector
-				projector = new THREE.Projector();
-				scene.add( controls.animationParent );
+                  objLoader.setMaterials( materials );
 
 
+                  objLoader.setPath( 'sneakers/' );
 
+                  objLoader.load( 'iceberg.obj', function ( xx ) {
+                  var factor = 0.5;  // scale factor
+                  xx.scale.set(factor, factor, factor);
+                  xx.position.y = 0;
 
 
-					/***************************************** custom ***********************************************************/
-				/////////////////// for loading the floor/////////////////////////////////////////////////////////////////////
-				//camera.lookAt(new THREE.Vector3(0,0,0));
-				//controls.target.position.copy(new THREE.Vector3(0, 0, 500));
-				var floorLength=1000;
-				var floorWidth=1000;
 
-				geometry = new THREE.PlaneGeometry( floorLength, floorWidth, 1, 1 );
-				geometry.applyMatrix( new THREE.Matrix4().makeRotationX( - Math.PI / 2 ) );
 
-				var floorTexture = new THREE.ImageUtils.loadTexture( 'images/blackFloor.png' );
-				floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
-				floorTexture.repeat.set(20, 20);
-				var floorMaterial = new THREE.MeshBasicMaterial( { map: floorTexture, side: THREE.DoubleSide } );
-				floor = new THREE.Mesh( geometry, floorMaterial );
-				floor.translateX(floorLength/2);
-				floor.translateY(-0.5);
-				floor.translateZ(floorWidth/2);
-				scene.add( floor );
+                  scene.add( xx );
 
+                  }, onProgress, onError );
+                  }); // mtlLoader
 
+                  var faceMat = new THREE.MeshLambertMaterial({color:0xb5556b});
 
-				// texture
+//renderer
 
-				var manager = new THREE.LoadingManager();
-				manager.onProgress = function ( item, loaded, total ) {
+              renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false });
+              renderer.setSize( window.innerWidth, window.innerHeight );
 
-				//	console.log( item, loaded, total );
+              document.body.appendChild( renderer.domElement );
 
-				};
 
-				var texture = new THREE.Texture();
+// All Lights
+              var directionalLight = new THREE.DirectionalLight('white', 0.5);
+              var light = new THREE.AmbientLight('white', 0.5);
+              directionalLight.position.set(6,10,50);
+              scene.add(directionalLight);
+              scene.add(light);
 
-				var loader = new THREE.ImageLoader( manager );
-				loader.load( 'img/bleh.jpg', function ( image ) {
 
-					texture.image = image;
-					texture.needsUpdate = true;
 
-				} );
 
-				// model
 
-				var loader = new THREE.OBJLoader( manager );
-				loader.load( 'sneakers/shoe.obj', function ( object ) {
 
-							object.traverse( function ( child ) {
+} // end of function init
 
-								if ( child instanceof THREE.Mesh ) {
+              function animate() {
 
-									//child.material.map = texture;
-									child.material.ambient.setHex(0xFF0000);
-									child.material.emissive.setHex(0x00FF00);
-									child.material.color.setHex(0x0000FF);
+                requestAnimationFrame(animate);
+                controls.update();
+              }
 
 
-								}
 
-							} );
 
-								object.position.x =500;
-								object.position.y =0;
-								object.position.z =500;
-
-
-
-								scene.add(object);
-
-
-				} );
-
-
-
-			}
-
-
-			function onWindowResize() {
-
-				camera.aspect = window.innerWidth / window.innerHeight;
-				camera.updateProjectionMatrix();
-
-				renderer.setSize( window.innerWidth, window.innerHeight );
-
-
-			}
-
-			function animate() {
-
-				requestAnimationFrame( animate );
-
-				render();
-				stats.update();
-
-
-
-			}
-
-			function render() {
-
-				var delta = clock.getDelta();
-				THREE.AnimationHandler.update( delta);
-				controls.update( delta );
-				renderer.render( scene, camera );
-
-			}
-
+              function render() {
+                renderer.render(scene, camera);
+              }
 
 
 
 
 
 		</script>
-</body>
+	</body>
 </html>
