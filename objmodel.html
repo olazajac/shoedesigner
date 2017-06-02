@@ -60,7 +60,7 @@
 function init(){
 
   camera = new THREE.PerspectiveCamera( 45, width/height, 1, 1000 );  //camera.position.z = 5;
-              camera.position.z = 500;
+              camera.position.z = 1000;
             //  camera.position.set(0, 0, 500);
             //  camera.lookAt(new THREE.Vector3(0, 0, 0)); // target kamery
 
@@ -104,7 +104,7 @@ function init(){
                   objLoader.load( 'cube.obj', function ( xx ) {
                   var factor = 5;  // scale factor
                   xx.scale.set(factor, factor, factor);
-                  xx.position.set(20,20,-80);
+                  xx.position.set(0,0,0);
 
 
 
