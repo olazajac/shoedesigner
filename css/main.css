@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin');
+
+html, body {
+  overflow-x: hidden;
+}
+
+#logo {
+  margin:20px;
+}
+
+#menu {
+  margin:20px;
+  float:right;
+}
+
+
+
+.tilecontainer {
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.designer{
+  text-align:center;
+}
+
+.designer img {
+  max-width:100%;
+}
+
+.outertile{
+  width:122px;
+  height:140px;
+  transition: all 1s;
+  box-sizing: border-box;
+  background-color:transparent;
+  display:flex;
+  align-items: flex-end;
+  border-right:3px solid transparent;
+  border-top:3px solid transparent;
+}
+
+.outertile:hover {
+  width:122px;
+  height:140px;
+  transition: all 1s;
+  box-sizing: border-box;
+  background-color:transparent;
+  display:flex;
+  align-items: flex-end;
+  border-right:3px solid black;
+  border-top:3px solid black;
+}
+
+.matinfo p {
+  margin:5px;
+  font-family: 'Cabin', sans-serif;
+}
+.matinfo  {
+  position:relative;
+}
+
+.innerinfo p {
+  opacity: 0;
+}
+
+.matinfo:hover .innerinfo p {
+  opacity: 1;
+}
+
+.colortile {
+  width:100px;
+  height:100px;
+  padding: 5px;
+  margin-top: 10px;
+  line-height: 150px;
+  color: white;
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+  box-sizing: content-box;
+  transition: all 0.5s ease;
+}
+
+/*.colortile:hover {
+  width:110px;
+  height:110px;
+}*/
